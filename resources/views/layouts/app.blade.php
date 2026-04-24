@@ -17,37 +17,39 @@
             <h2 class="mb-8 text-xl font-bold">Perpustakaan</h2>
 
             <nav class="space-y-2">
-                <a href="{{ route('dashboard') }}"
-                    class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
+                <a href="{{ route('dashboard') }}" class="block rounded-lg px-4 py-3 text-sm font-medium transition
+       {{ request()->routeIs('dashboard') ? 'bg-blue-600 text-white' : 'text-slate-200 hover:bg-slate-700' }}">
                     Dashboard
                 </a>
 
-                <a href="{{ route('buku.index') }}"
-                    class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
+                <a href="{{ route('buku.index') }}" class="block rounded-lg px-4 py-3 text-sm font-medium transition
+       {{ request()->routeIs('buku.*') ? 'bg-blue-600 text-white' : 'text-slate-200 hover:bg-slate-700' }}">
                     Data Buku
                 </a>
 
-                <a href="{{ route('transaksi.create') }}"
-                    class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
+                <a href="{{ route('transaksi.create') }}" class="block rounded-lg px-4 py-3 text-sm font-medium transition
+       {{ request()->routeIs('transaksi.create') ? 'bg-blue-600 text-white' : 'text-slate-200 hover:bg-slate-700' }}">
                     Peminjaman
                 </a>
 
                 <a href="{{ route('transaksi.pengembalian') }}"
-                    class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
+                    class="block rounded-lg px-4 py-3 text-sm font-medium transition
+       {{ request()->routeIs('transaksi.pengembalian') ? 'bg-blue-600 text-white' : 'text-slate-200 hover:bg-slate-700' }}">
                     Pengembalian
                 </a>
 
-                <a href="{{ route('transaksi.laporan') }}"
-                    class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
+                <a href="{{ route('transaksi.laporan') }}" class="block rounded-lg px-4 py-3 text-sm font-medium transition
+       {{ request()->routeIs('transaksi.laporan') ? 'bg-blue-600 text-white' : 'text-slate-200 hover:bg-slate-700' }}">
                     Laporan
                 </a>
-                <form action="{{ route('logout') }}" method="POST" class="mt-6">
-                    @csrf
-                    <button type="submit"
-                        class="w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-white transition hover:bg-red-600">
-                        Logout
-                    </button>
-                </form>
+            </nav>
+            <form action="{{ route('logout') }}" method="POST" class="mt-6">
+                @csrf
+                <button type="submit"
+                    class="w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-white transition hover:bg-red-600">
+                    Logout
+                </button>
+            </form>
             </nav>
         </aside>
 
