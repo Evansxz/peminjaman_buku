@@ -34,6 +34,13 @@
                    class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
                     Laporan
                 </a>
+                <form action="{{ route('logout') }}" method="POST" class="mt-6">
+                    @csrf
+                    <button type="submit"
+                        class="w-full rounded-lg px-4 py-3 text-left text-sm font-medium text-white transition hover:bg-red-600">
+                        Logout
+                    </button>
+                </form>
             </nav>
         </aside>
 
