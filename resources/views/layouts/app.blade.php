@@ -20,8 +20,8 @@
                     Data Buku
                 </a>
 
-                <a href="#"
-                   class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
+                <a href="{{ route('transaksi.create') }}"
+                    class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
                     Peminjaman
                 </a>
 
