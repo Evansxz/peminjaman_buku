@@ -19,5 +19,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/peminjaman', [TransaksiController::class, 'store'])->name('transaksi.store');
     Route::get('/cari-buku/{kode_buku}', [TransaksiController::class, 'cariBuku'])->name('transaksi.cariBuku');
 
+    Route::get('/pengembalian', [TransaksiController::class, 'pengembalian'])->name('transaksi.pengembalian');
+    Route::get('/pengembalian/cari/{kode_buku}', [TransaksiController::class, 'cariPeminjaman'])->name('transaksi.cariPeminjaman');
+    Route::post('/pengembalian/{detailTransaksi}', [TransaksiController::class, 'prosesPengembalian'])->name('transaksi.prosesPengembalian');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -113,4 +113,96 @@ class TransaksiController extends Controller
             return back()->with('error', $e->getMessage())->withInput();
         }
     }
+
+    public function pengembalian()
+    {
+        return view('transaksi.pengembalian');
+    }
+
+    public function cariPeminjaman($kode_buku)
+    {
+        $buku = Buku::where('kode_buku', $kode_buku)->first();
+
+        if (!$buku) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Buku tidak ditemukan.'
+            ], 404);
+        }
+
+        $detailTransaksi = DetailTransaksi::with(['transaksi', 'buku'])
+            ->where('buku_id', $buku->id)
+            ->where('status', 'dipinjam')
+            ->latest()
+            ->get();
+
+        if ($detailTransaksi->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Buku ini tidak sedang dipinjam.'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'buku' => [
+                'id' => $buku->id,
+                'kode_buku' => $buku->kode_buku,
+                'judul' => $buku->judul,
+                'stok' => $buku->stok,
+            ],
+            'data' => $detailTransaksi->map(function ($detail) {
+                return [
+                    'id' => $detail->id,
+                    'nama_peminjam' => $detail->transaksi->nama_peminjam,
+                    'kelas' => $detail->transaksi->kelas,
+                    'foto_peminjam' => $detail->transaksi->foto_peminjam
+                        ? asset($detail->transaksi->foto_peminjam)
+                        : null,
+                    'tanggal_pinjam' => $detail->transaksi->tanggal_pinjam,
+                    'tanggal_kembali' => $detail->transaksi->tanggal_kembali,
+                    'kode_buku' => $detail->buku->kode_buku,
+                    'judul' => $detail->buku->judul,
+                    'status' => $detail->status,
+                ];
+            })
+        ]);
+    }
+
+    public function prosesPengembalian(DetailTransaksi $detailTransaksi)
+    {
+        try {
+            DB::transaction(function () use ($detailTransaksi) {
+                $detail = DetailTransaksi::with(['transaksi', 'buku'])
+                    ->where('id', $detailTransaksi->id)
+                    ->lockForUpdate()
+                    ->firstOrFail();
+
+                if ($detail->status === 'kembali') {
+                    throw new \Exception('Buku ini sudah dikembalikan.');
+                }
+
+                $detail->update([
+                    'status' => 'kembali',
+                    'tanggal_dikembalikan' => now()->toDateString(),
+                ]);
+
+                $detail->buku->increment('stok');
+
+                $sisaDipinjam = DetailTransaksi::where('transaksi_id', $detail->transaksi_id)
+                    ->where('status', 'dipinjam')
+                    ->count();
+
+                if ($sisaDipinjam === 0) {
+                    $detail->transaksi->update([
+                        'status' => 'selesai',
+                    ]);
+                }
+            });
+
+            return redirect()->route('transaksi.pengembalian')->with('success', 'Buku berhasil dikembalikan.');
+        } catch (\Throwable $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
 }

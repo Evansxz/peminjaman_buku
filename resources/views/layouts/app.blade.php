@@ -25,8 +25,8 @@
                     Peminjaman
                 </a>
 
-                <a href="#"
-                   class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
+                <a href="{{ route('transaksi.pengembalian') }}"
+                    class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
                     Pengembalian
                 </a>
 
