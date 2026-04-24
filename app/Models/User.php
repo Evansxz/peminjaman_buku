@@ -14,6 +14,10 @@ use Illuminate\Notifications\Notifiable;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
+    public function transaksi()
+    {
+    return $this->hasMany(Transaksi::class, 'user_id');
+    }
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
