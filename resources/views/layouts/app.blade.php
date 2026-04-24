@@ -30,7 +30,7 @@
                     Pengembalian
                 </a>
 
-                <a href="#"
+                <a href="{{ route('transaksi.laporan') }}"
                    class="block rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-slate-700">
                     Laporan
                 </a>

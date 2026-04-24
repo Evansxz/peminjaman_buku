@@ -204,5 +204,14 @@ class TransaksiController extends Controller
         } catch (\Throwable $e) {
             return back()->with('error', $e->getMessage());
         }
+
+    }
+    public function laporan()
+    {
+        $transaksi = Transaksi::with(['user', 'detailTransaksi.buku'])
+            ->latest()
+            ->paginate(10);
+
+        return view('transaksi.laporan', compact('transaksi'));
     }
 }

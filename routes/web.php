@@ -23,5 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengembalian/cari/{kode_buku}', [TransaksiController::class, 'cariPeminjaman'])->name('transaksi.cariPeminjaman');
     Route::post('/pengembalian/{detailTransaksi}', [TransaksiController::class, 'prosesPengembalian'])->name('transaksi.prosesPengembalian');
 
+    Route::get('/laporan', [TransaksiController::class, 'laporan'])->name('transaksi.laporan');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
