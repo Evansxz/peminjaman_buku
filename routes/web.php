@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -13,6 +14,8 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [dashboardcontroller::class, 'index'])->name('dashboard');
+
     Route::resource('buku', BukuController::class);
     
     Route::get('/peminjaman', [TransaksiController::class, 'create'])->name('transaksi.create');
