@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="{{ asset('images/IconLogo.png') }}" type="image/png">
     <title>Sistem Peminjaman Buku</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -14,7 +15,7 @@
     <div class="flex min-h-screen">
         {{-- Sidebar --}}
         <aside class="w-64 bg-slate-900 px-5 py-6 text-white">
-            <h2 class="mb-8 text-xl font-bold">Perpustakaan</h2>
+            <img src="{{ asset('images/LogoPerpus.png') }}" alt="Dashboard Icon" class="mb-4 h-12 w-25 object-contain">
 
             <nav class="space-y-2">
                 <a href="{{ route('dashboard') }}" class="block rounded-lg px-4 py-3 text-sm font-medium transition
